@@ -2,6 +2,7 @@
 using HRMS.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,22 +22,28 @@ namespace HRMS.Controllers
         }
 
         // GET: Check/Add?empId=1&checkType=CheckIn
-        public ActionResult Add(string empId, string checkType)
+        public ActionResult Add(string empId, string checkType, string checkTime)
         {
             // Validate parameters
-            if (string.IsNullOrEmpty(empId) || string.IsNullOrEmpty(checkType))
+            if (string.IsNullOrEmpty(empId) || string.IsNullOrEmpty(checkType) || string.IsNullOrEmpty(checkTime))
             {
-                return HttpNotFound("EmpId and CheckType are required.");
+                return HttpNotFound("EmpId, CheckType, and CheckTime are required.");
             }
 
-            // Convert checkType to uppercase for consistency
-            checkType = checkType.ToUpper();
+
+
+            // Parse checkTime string to DateTime
+            DateTime checkDateTime;
+            if (!DateTime.TryParseExact(checkTime, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out checkDateTime))
+            {
+                return HttpNotFound("Invalid date format for CheckTime.");
+            }
 
             // Create new Check record
             var newCheck = new Check
             {
                 Emp_id = empId,
-                CheckTime = DateTime.Now,
+                CheckTime = checkDateTime, // Use the parsed DateTime
                 CheckType = checkType
             };
 
