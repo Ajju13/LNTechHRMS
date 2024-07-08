@@ -1,0 +1,71 @@
+﻿@model HRMS.Models.Education
+
+@{
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Employee Managment</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Education/ViewEducation">Education</a></li>
+                    <li class="breadcrumb-item active">Edit Education</li>
+                </ul>
+            </div>
+            <div class="col-auto float-end ms-auto">
+                <a href="/Education/ViewEducation" class="btn add-btn"><i class="fa fa-bars"></i> View All Education</a>
+
+            </div>
+        </div>
+    </div>
+    <!-- Edit Education Modal -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    @using (Html.BeginForm("EditEducation", "Education", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Education_id)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>University/College Name <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.University_College_Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.University_College_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Degree <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Degree, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>From Date <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.From_Date, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.From_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>To Date <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.To_Date, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.To_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

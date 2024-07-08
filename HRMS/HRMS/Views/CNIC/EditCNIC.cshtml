@@ -1,0 +1,71 @@
+﻿@model HRMS.Models.CNIC
+
+@{
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Employee Managment</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/CNIC/ViewCNIC">CNIC</a></li>
+                    <li class="breadcrumb-item active">Edit CNIC</li>
+                </ul>
+            </div>
+            <div class="col-auto float-end ms-auto">
+                <a href="/CNIC/ViewCNIC" class="btn add-btn"><i class="fa fa-bars"></i> View All CNIC</a>
+
+            </div>
+        </div>
+    </div>
+    <!-- Edit CNIC Modal -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    @using (Html.BeginForm("EditCNIC", "CNIC", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Document_id)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>CNIC No <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.CNIC_Number, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CNIC_Number, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>CNIC Expiry <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.Document_Expiry, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Document_Expiry, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Upload CNIC Document <span class="text-danger">*</span></label>
+                                <input type="file" name="CNICFile" class="form-control-file" />
+                                @Html.ValidationMessageFor(model => model.Document_Attachment, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>CNIC Expiry <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.Document_Expiry, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Document_Expiry, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

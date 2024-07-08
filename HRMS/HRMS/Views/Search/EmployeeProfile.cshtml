@@ -1,0 +1,313 @@
+﻿@model HRMS.ViewModels.PersonalProfileViewModel
+
+@{
+    ViewBag.Title = "EmployeeProfile";
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Search</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="admin-dashboard.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Search</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Starts -->
+    <div class="row">
+        <div class="col-12">
+            <!-- Search Form -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="main-search">
+                        @using (Html.BeginForm("EmployeeProfile", "Search", FormMethod.Get))
+                        {
+                            <div class="input-group">
+                                @Html.TextBox("searchValue", null, new { @class = "form-control", placeholder = "Enter Employee ID or Name" })
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /Search Form -->
+        </div>
+    </div>
+
+    @if (Model.Emp_Id != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <div class="profile-view">
+                            <div class="profile-img-wrap">
+                                <div class="profile-img">
+                                    <a href="#"><img alt="" src="@Model.Emp_Image"></a>
+                                </div>
+                            </div>
+                            <div class="profile-basic">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="profile-info-left">
+                                            <h3 class="user-name m-t-0 mb-0">@(Model.First_Name ?? "Empty")</h3>
+                                            <small class="text-muted">@Model.JobTitle</small>
+                                            <div class="staff-id">Employee ID : @Model.Emp_Id</div>
+                                            <div class="small doj text-muted">Date of Join : @Model.Joining_date</div>
+                                            <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Phone:</div>
+                                                <div class="text"><a href="">@(Model.Phone ?? "Empty")</a></div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Email:</div>
+                                                <div class="text"><a href="">@Model.Email</a></div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Birthday:</div>
+                                                <div class="text">@Model.DOB</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Address:</div>
+                                                <div class="text">@Model.Location</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Gender:</div>
+                                                <div class="text">@Model.Gender</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card tab-box">
+                    <div class="row user-tabs">
+                        <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                            <ul class="nav nav-tabs nav-tabs-bottom">
+                                <li class="nav-item"><a href="/Dashboard/my" data-bs-toggle="tab" class="nav-link active">Profile</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <!-- Profile Info Tab -->
+                    <div id="emp_profile" class="pro-overview tab-pane fade show active">
+                        <div class="row">
+                            <div class="col-md-6 d-flex">
+                                <div class="card profile-box flex-fill">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Personal Informations <a href="/Dashboard/EditEmployee/@Model.Emp_Id" class="edit-icon" target="_blank" data-bs-target="#personal_info_modal"><i class="fa fa-pencil"></i></a></h3>
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">CNIC No.</div>
+                                                <div class="text"> @Model.CNICNo</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Land Line</div>
+                                                <div class="text"><a href="">@Model.Landline</a></div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Nationality</div>
+                                                <div class="text">@Model.Nationality</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Religion</div>
+                                                <div class="text">@Model.Religions</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Marital status</div>
+                                                <div class="text">@Model.Marital_Status</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex">
+                                <div class="card profile-box flex-fill">
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            Emergency Contact
+                                            @if (Model.RelationId == -1)
+                                            {
+                                                <a href="/Relative/ViewRelative" target="_blank" class="edit-icon">
+                                                    <i class="fa fa-plus"></i> <!-- Icon for creating a record -->
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Relative/EditRelative/@Model.RelationId" target="_blank" class="edit-icon">
+                                                    <i class="fa fa-pencil"></i> <!-- Icon for editing a record -->
+                                                </a>
+                                            }
+                                        </h3>                                        
+                                        <h5 class="section-title">Primary</h5>
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Name</div>
+                                                <div class="text">@Model.RelativeName</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Relationship</div>
+                                                <div class="text">@Model.RelationShip</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Phone </div>
+                                                <div class="text">@Model.RelatvePhone</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Address </div>
+                                                <div class="text">@Model.Relative_Address</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 d-flex">
+                                <div class="card profile-box flex-fill">
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            Bank information
+                                            @if (Model.BankId != null && Model.BankId != "N/A")
+                                            {
+                                                <a href="/Dashboard/EditBank/@Model.BankId" target="_blank" class="edit-icon">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Dashboard/ViewBank" target="_blank" class="edit-icon">
+                                                    <i class="fa fa-plus"></i> <!-- Icon for creating a record -->
+                                                </a>
+                                            }
+                                        </h3>
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Bank name</div>
+                                                <div class="text">@Model.BankName</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Bank account No.</div>
+                                                <div class="text">@Model.BankAccountNo</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Account Title</div>
+                                                <div class="text">@Model.AccountTitle</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Branch Name</div>
+                                                <div class="text">@Model.BranchName</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 d-flex">
+                                <div class="card profile-box flex-fill">
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            Education Information
+                                            @if (Model.EducationHistory != null && Model.EducationHistory.Any())
+                                            {
+                                                <a href="@Url.Action("EditEducation", "Education", new { empId = Model.Emp_Id })" target="_blank" class="edit-icon">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Education/ViewEducation/" target="_blank" class="add-icon">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                            }
+                                        </h3>
+                                        <div class="experience-box">
+                                            <ul class="experience-list">
+                                                @foreach (var education in Model.EducationHistory)
+                                                {
+                                                    <li>
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
+                                                        </div>
+                                                        <div class="experience-content">
+                                                            <div class="timeline-content">
+                                                                <a href="#/" class="name">@education.InstitutionName</a>
+                                                                <div>@education.Degree</div>
+                                                                <span class="time">@education.FromDate.ToShortDateString() - @education.ToDate.ToShortDateString()</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex">
+                                <div class="card profile-box flex-fill">
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            Experience
+                                            @if (Model.ExperienceHistory != null && Model.ExperienceHistory.Any())
+                                            {
+                                                <a href="@Url.Action("EditExperience", "Experience", new { empId = Model.Emp_Id })" target="_blank" class="edit-icon">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Experience/ViewExperience" target="_blank" class="add-icon">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                            }
+                                        </h3>
+                                        <div class="experience-box">
+                                            <ul class="experience-list">
+                                                @foreach (var experience in Model.ExperienceHistory)
+                                                {
+                                                    <li>
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
+                                                        </div>
+                                                        <div class="experience-content">
+                                                            <div class="timeline-content">
+                                                                <a href="#/" class="name">@experience.Company_name</a>
+                                                                <div>@experience.Position</div>
+                                                                <span class="time">@experience.TotalExperience</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>@ViewBag.ErrorMessage</p>
+    }
+</div>

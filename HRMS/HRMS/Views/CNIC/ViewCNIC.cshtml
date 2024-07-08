@@ -1,0 +1,169 @@
+﻿@model HRMS.ViewModels.AddCNICViewModel
+
+@{
+    ViewBag.Title = "View CNIC";
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<!-- jQuery and jQuery UI JavaScript -->
+
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Employee Management</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/CNIC/ViewCNIC">CNIC</a></li>
+                    <li class="breadcrumb-item active">View All CNICs</li>
+                </ul>
+            </div>
+            <div class="col-auto float-end ms-auto">
+                <a href="#" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_CNIC"><i class="fa fa-plus"></i>Add CNIC</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+    <div class="text-center mt-4">
+        @using (Html.BeginForm("ViewCNIC", "CNIC", FormMethod.Get, new { @class = "form-inline" }))
+        {
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="searchBy" class="mr-2">Search By:</label>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButton("searchBy", "ByEmployeeID", true, new { id = "searchByEmployeeID", @class = "form-check-input" })
+                    <label class="form-check-label" for="searchByEmployeeID">Employee ID</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButton("searchBy", "ByCnicNo", false, new { id = "ByCnicNo", @class = "form-check-input" })
+                    <label class="form-check-label" for="ByCnicNo">Cnic No</label>
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                @Html.TextBox("searchValue", null, new { @class = "form-control", placeholder = "Enter search term" })
+                <br />
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
+            </div>
+        }
+    </div>
+    <br />
+    <!-- /Grid View Container -->
+    <!-- Employee Table -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive list-view" id="employeeList">
+                <table class="table table-striped custom-table datatable">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>CNIC NO</th>
+                            <th>CNIC Expiry</th>
+                            <th>Download Document</th>
+                            <th class="text-end no-sort">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.CNIC.Any())
+                        {
+                            foreach (var Education in Model.CNIC)
+                            {
+                                <tr>
+                                    <td>@Education.Emp_Id</td>
+                                    <td>@Education.CNIC_Number</td>
+                                    <td>@Education.Document_Expiry.ToShortDateString() </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(Education.Document_Attachment))
+                                        {
+                                            <a href="@Url.Content(Education.Document_Attachment)" target="_blank" , class="btn btn-secondary ml">Download CNIC</a>
+                                        }
+                                        else
+                                        {
+                                            <span>No Document Uploaded</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    @Html.ActionLink("Edit CNIC", "EditCNIC", new { id = Education.Document_id }, new { @class = "dropdown-item" })
+                                                </li>
+                                                <li>
+                                                    @using (Html.BeginForm("DeleteCNIC", "CNIC", new { id = Education.Document_id }, FormMethod.Post, new { onsubmit = "return confirm('Are you sure you want to delete this Education?');" }))
+                                                    {
+                                                        <button type="submit" class="dropdown-item">Delete</button>
+                                                    }
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6">No CNIC found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Education Modal -->
+    <div id="add_CNIC" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Education</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AddCNIC", "CNIC", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee <span class="text-danger">*</span></label>
+                                @Html.DropDownListFor(model => model.AddCNIC.Emp_Id, new SelectList(Model.Employees, "Emp_Id", "First_Name"), "Select Employee", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AddCNIC.Emp_Id, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>CNIC No <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.AddCNIC.CNIC_Number, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AddCNIC.CNIC_Number, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>CNIC Expiry <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.AddCNIC.Document_Expiry, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @Value = DateTime.Now.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.AddCNIC.Document_Expiry, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Upload CNIC Document <span class="text-danger">*</span></label>
+                                <input type="file" name="CNICFile" class="form-control-file" />
+                                @Html.ValidationMessageFor(model => model.AddCNIC.Document_Attachment, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

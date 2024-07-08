@@ -1,0 +1,96 @@
+﻿@model HRMS.Models.Bank
+@{
+    ViewBag.Title = "EditBank";
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+
+<!-- Page Content -->
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Employee Managment</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Dashboard/ViewBank">Bank</a></li>
+                    <li class="breadcrumb-item active">Edit Bank</li>
+                </ul>
+            </div>
+            <div class="col-auto float-end ms-auto">
+                <a href="/Dashboard/ViewBank" class="btn add-btn"><i class="fa fa-bars"></i> View All Banks</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    @using (Html.BeginForm("EditBank", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.HiddenFor(model => model.Bank_id)
+                        @Html.HiddenFor(model => model.Emp_Id)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Bank Name <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Bank_Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Bank_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Branch Name <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Branch_Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Branch_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Branch Code <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Branch_Code, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Branch_Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Account Title <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Account_Title, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Account_Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Account No <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Account_No, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Account_No, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Effective Date <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Effective_Date, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                    @Html.ValidationMessageFor(model => model.Effective_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 3 })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

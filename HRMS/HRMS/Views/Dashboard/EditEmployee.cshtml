@@ -1,0 +1,453 @@
+﻿@model HRMS.ViewModels.EditEmployeeViewModel
+
+@{
+    ViewBag.Title = "Edit Employee";
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Employee Managment</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Dashboard/ViewEmployee">Employee</a></li>
+                    <li class="breadcrumb-item active">Edit Employee</li>
+                </ul>
+            </div>
+            <div class="col-auto float-end ms-auto">
+                <a href="/Dashboard/ViewEmployee" class="btn add-btn"><i class="fa fa-bars"></i> View All Employees</a>
+
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("EditEmployee", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.Emp_Id)
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>First Name <span class="text-danger">*</span></label>
+            @Html.TextBoxFor(model => model.First_Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.First_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Last Name <span class="text-danger">*</span></label>
+            @Html.TextBoxFor(model => model.Last_Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Last_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Father/Husband Name</label>
+            @Html.TextBoxFor(model => model.FatherHusbandName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FatherHusbandName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Gender <span class="text-danger">*</span></label>
+            <select class="form-control" id="Gender" name="Gender">
+                <option value="Permanent">Male</option>
+                <option value="Contract">Female</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Martial Status <span class="text-danger">*</span></label>
+            <select class="form-control" id="Marital_Status" name="Marital_Status">
+                <option value="Permanent">Married</option>
+                <option value="Contract">Unmarried</option>
+                <option value="Contract">Divorced</option>
+                <option value="Contract">Other</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Marital_Status, "", new { @class = "text-danger" })
+        </div>
+           </div>
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Date of Birth</label>
+                @Html.TextBoxFor(model => model.DOB, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Address</label>
+                @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+    
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Religion <span class="text-danger">*</span></label>
+            <select class="form-control" id="Religions" name="Religions">
+                <option value="Islam">Islam</option>
+                <option value="Christianity">Christianity</option>
+                <option value="Hinduism">Hinduism</option>
+                <option value="Buddhism">Buddhism</option>
+                <option value="Sikhism">Sikhism</option>
+                <option value="Judaism">Judaism</option>
+                <option value="Other">Other</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Religions, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Nationality <span class="text-danger">*</span></label>
+            <select class="form-control" id="Nationality" name="Nationality">
+                <option value="Afghan">Afghan</option>
+                <option value="Albanian">Albanian</option>
+                <option value="Algerian">Algerian</option>
+                <option value="American">American</option>
+                <option value="Andorran">Andorran</option>
+                <option value="Angolan">Angolan</option>
+                <option value="Argentine">Argentine</option>
+                <option value="Armenian">Armenian</option>
+                <option value="Australian">Australian</option>
+                <option value="Austrian">Austrian</option>
+                <option value="Azerbaijani">Azerbaijani</option>
+                <option value="Bahamian">Bahamian</option>
+                <option value="Bahraini">Bahraini</option>
+                <option value="Bangladeshi">Bangladeshi</option>
+                <option value="Barbadian">Barbadian</option>
+                <option value="Belarusian">Belarusian</option>
+                <option value="Belgian">Belgian</option>
+                <option value="Belizean">Belizean</option>
+                <option value="Beninese">Beninese</option>
+                <option value="Bhutanese">Bhutanese</option>
+                <option value="Bolivian">Bolivian</option>
+                <option value="Bosnian">Bosnian</option>
+                <option value="Botswanan">Botswanan</option>
+                <option value="Brazilian">Brazilian</option>
+                <option value="British">British</option>
+                <option value="Bruneian">Bruneian</option>
+                <option value="Bulgarian">Bulgarian</option>
+                <option value="Burkinabe">Burkinabe</option>
+                <option value="Burmese">Burmese</option>
+                <option value="Burundian">Burundian</option>
+                <option value="Cambodian">Cambodian</option>
+                <option value="Cameroonian">Cameroonian</option>
+                <option value="Canadian">Canadian</option>
+                <option value="Cape Verdean">Cape Verdean</option>
+                <option value="Central African">Central African</option>
+                <option value="Chadian">Chadian</option>
+                <option value="Chilean">Chilean</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Colombian">Colombian</option>
+                <option value="Comoran">Comoran</option>
+                <option value="Congolese">Congolese</option>
+                <option value="Costa Rican">Costa Rican</option>
+                <option value="Croatian">Croatian</option>
+                <option value="Cuban">Cuban</option>
+                <option value="Cypriot">Cypriot</option>
+                <option value="Czech">Czech</option>
+                <option value="Danish">Danish</option>
+                <option value="Djiboutian">Djiboutian</option>
+                <option value="Dominican">Dominican</option>
+                <option value="Dutch">Dutch</option>
+                <option value="East Timorese">East Timorese</option>
+                <option value="Ecuadorean">Ecuadorean</option>
+                <option value="Egyptian">Egyptian</option>
+                <option value="Emirati">Emirati</option>
+                <option value="Equatorial Guinean">Equatorial Guinean</option>
+                <option value="Eritrean">Eritrean</option>
+                <option value="Estonian">Estonian</option>
+                <option value="Ethiopian">Ethiopian</option>
+                <option value="Fijian">Fijian</option>
+                <option value="Finnish">Finnish</option>
+                <option value="French">French</option>
+                <option value="Gabonese">Gabonese</option>
+                <option value="Gambian">Gambian</option>
+                <option value="Georgian">Georgian</option>
+                <option value="German">German</option>
+                <option value="Ghanaian">Ghanaian</option>
+                <option value="Greek">Greek</option>
+                <option value="Grenadian">Grenadian</option>
+                <option value="Guatemalan">Guatemalan</option>
+                <option value="Guinea-Bissauan">Guinea-Bissauan</option>
+                <option value="Guinean">Guinean</option>
+                <option value="Guyanese">Guyanese</option>
+                <option value="Haitian">Haitian</option>
+                <option value="Honduran">Honduran</option>
+                <option value="Hungarian">Hungarian</option>
+                <option value="Icelandic">Icelandic</option>
+                <option value="Indian">Indian</option>
+                <option value="Indonesian">Indonesian</option>
+                <option value="Iranian">Iranian</option>
+                <option value="Iraqi">Iraqi</option>
+                <option value="Irish">Irish</option>
+                <option value="Israeli">Israeli</option>
+                <option value="Italian">Italian</option>
+                <option value="Ivorian">Ivorian</option>
+                <option value="Jamaican">Jamaican</option>
+                <option value="Japanese">Japanese</option>
+                <option value="Jordanian">Jordanian</option>
+                <option value="Kazakh">Kazakh</option>
+                <option value="Kenyan">Kenyan</option>
+                <option value="Kiribati">Kiribati</option>
+                <option value="Kuwaiti">Kuwaiti</option>
+                <option value="Kyrgyz">Kyrgyz</option>
+                <option value="Laotian">Laotian</option>
+                <option value="Latvian">Latvian</option>
+                <option value="Lebanese">Lebanese</option>
+                <option value="Liberian">Liberian</option>
+                <option value="Libyan">Libyan</option>
+                <option value="Liechtensteiner">Liechtensteiner</option>
+                <option value="Lithuanian">Lithuanian</option>
+                <option value="Luxembourgish">Luxembourgish</option>
+                <option value="Macedonian">Macedonian</option>
+                <option value="Malagasy">Malagasy</option>
+                <option value="Malawian">Malawian</option>
+                <option value="Malaysian">Malaysian</option>
+                <option value="Maldivian">Maldivian</option>
+                <option value="Malian">Malian</option>
+                <option value="Maltese">Maltese</option>
+                <option value="Marshallese">Marshallese</option>
+                <option value="Mauritanian">Mauritanian</option>
+                <option value="Mauritian">Mauritian</option>
+                <option value="Mexican">Mexican</option>
+                <option value="Micronesian">Micronesian</option>
+                <option value="Moldovan">Moldovan</option>
+                <option value="Monacan">Monacan</option>
+                <option value="Mongolian">Mongolian</option>
+                <option value="Montenegrin">Montenegrin</option>
+                <option value="Moroccan">Moroccan</option>
+                <option value="Mozambican">Mozambican</option>
+                <option value="Namibian">Namibian</option>
+                <option value="Nauruan">Nauruan</option>
+                <option value="Nepalese">Nepalese</option>
+                <option value="New Zealander">New Zealander</option>
+                <option value="Nicaraguan">Nicaraguan</option>
+                <option value="Nigerien">Nigerien</option>
+                <option value="Nigerian">Nigerian</option>
+                <option value="North Korean">North Korean</option>
+                <option value="Norwegian">Norwegian</option>
+                <option value="Omani">Omani</option>
+                <option value="Pakistani">Pakistani</option>
+                <option value="Palauan">Palauan</option>
+                <option value="Panamanian">Panamanian</option>
+                <option value="Papua New Guinean">Papua New Guinean</option>
+                <option value="Paraguayan">Paraguayan</option>
+                <option value="Peruvian">Peruvian</option>
+                <option value="Philippine">Philippine</option>
+                <option value="Polish">Polish</option>
+                <option value="Portuguese">Portuguese</option>
+                <option value="Qatari">Qatari</option>
+                <option value="Romanian">Romanian</option>
+                <option value="Russian">Russian</option>
+                <option value="Rwandan">Rwandan</option>
+                <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                <option value="Saint Lucian">Saint Lucian</option>
+                <option value="Salvadoran">Salvadoran</option>
+                <option value="Samoan">Samoan</option>
+                <option value="San Marinese">San Marinese</option>
+                <option value="Sao Tomean">Sao Tomean</option>
+                <option value="Saudi">Saudi</option>
+                <option value="Senegalese">Senegalese</option>
+                <option value="Serbian">Serbian</option>
+                <option value="Seychellois">Seychellois</option>
+                <option value="Sierra Leonean">Sierra Leonean</option>
+                <option value="Singaporean">Singaporean</option>
+                <option value="Slovak">Slovak</option>
+                <option value="Slovenian">Slovenian</option>
+                <option value="Solomon Islander">Solomon Islander</option>
+                <option value="Somali">Somali</option>
+                <option value="South African">South African</option>
+                <option value="South Korean">South Korean</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Sri Lankan">Sri Lankan</option>
+                <option value="Sudanese">Sudanese</option>
+                <option value="Surinamer">Surinamer</option>
+                <option value="Swazi">Swazi</option>
+                <option value="Swedish">Swedish</option>
+                <option value="Swiss">Swiss</option>
+                <option value="Syrian">Syrian</option>
+                <option value="Taiwanese">Taiwanese</option>
+                <option value="Tajik">Tajik</option>
+                <option value="Tanzanian">Tanzanian</option>
+                <option value="Thai">Thai</option>
+                <option value="Togolese">Togolese</option>
+                <option value="Tongan">Tongan</option>
+                <option value="Trinidadian or Tobagonian">Trinidadian or Tobagonian</option>
+                <option value="Tunisian">Tunisian</option>
+                <option value="Turkish">Turkish</option>
+                <option value="Tuvaluan">Tuvaluan</option>
+                <option value="Ugandan">Ugandan</option>
+                <option value="Ukrainian">Ukrainian</option>
+                <option value="Uruguayan">Uruguayan</option>
+                <option value="Uzbekistani">Uzbekistani</option>
+                <option value="Vanuatuan">Vanuatuan</option>
+                <option value="Venezuelan">Venezuelan</option>
+                <option value="Vietnamese">Vietnamese</option>
+                <option value="Yemenite">Yemenite</option>
+                <option value="Zambian">Zambian</option>
+                <option value="Zimbabwean">Zimbabwean</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Nationality, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Blood Group <span class="text-danger">*</span></label>
+            <select class="form-control" id="Blood_Group" name="Blood_Group">
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="Unknown">Unknown</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Blood_Group, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Joining Date</label>
+            @Html.TextBoxFor(model => model.Joining_date, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+            @Html.ValidationMessageFor(model => model.Joining_date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Probation <span class="text-danger">*</span></label>
+            <select class="form-control" id="Probation" name="Probation">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Probation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Probation Confirmation Date</label>
+            @Html.TextBoxFor(model => model.Probation_Confirmation_Date, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+            @Html.ValidationMessageFor(model => model.Probation_Confirmation_Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Employment Type <span class="text-danger">*</span></label>
+            <select class="form-control" id="Employment_Type" name="Employment_Type">
+                <option value="Permanent">Permanent</option>
+                <option value="Contract">Contract</option>
+                <option value="Other">Other</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Employment_Type, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Department</label>
+            @Html.DropDownListFor(model => model.DepatmentId, new SelectList(ViewBag.Departments, "DepartmentId", "DepartmentName"), "Select Department", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DepatmentId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Branch</label>
+            @Html.DropDownListFor(model => model.Branch_id, new SelectList(ViewBag.Branches, "BranchId", "BranchName"), "Select Branch", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Branch_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Phone</label>
+            @Html.TextBoxFor(model => model.phone, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Landline</label>
+            @Html.TextBoxFor(model => model.landline, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.landline, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Email</label>
+            @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Job Title</label>
+            @Html.TextBoxFor(model => model.JobTitle, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.JobTitle, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Designation <span class="text-danger">*</span></label>
+            <select class="form-control" id="Designation" name="Designation">
+                <option value="SuperAdmin">Super Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="Employee">Employee</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Machine Code</label>
+            @Html.TextBoxFor(model => model.Machine_Code, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Machine_Code, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Username</label>
+            @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            Employee Image:
+            <div class="input-group">
+                <input type="file" name="imgfile" id="imgfile" class="form-control" onchange="displaySelectedFileName(this)" />
+            </div>
+            <input type="text" class="form-control" id="selectedFileName" readonly placeholder="No file chosen" />
+        </div>
+    </div>
+</div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    }
+
+</div>

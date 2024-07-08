@@ -1,0 +1,288 @@
+﻿@model HRMS.ViewModels.AdminAttendanceViewModel
+
+@{
+    ViewBag.Title = "Attendance";
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+<!-- Page content -->
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Attendance</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Attendance</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Attendance", "Attendance", FormMethod.Get))
+    {
+        <div class="row filter-row">
+            <div class="col-sm-3">
+                <div class="form-group form-focus">
+                    <label for="searchValue">Employee ID</label>
+                    <input type="text" class="form-control" id="searchValue" name="searchValue" placeholder="Enter Employee ID">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group form-focus select-focus">
+                    <label for="month">Select Month</label>
+                    @Html.DropDownList("month", GetMonthNames(), ViewBag.SelectedMonth as string, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group form-focus select-focus">
+                    <label for="year">Select Year</label>
+                    @Html.DropDownList("year", GetRecentYears(), ViewBag.SelectedYear as string, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="hidden-xs">&nbsp;</label>
+                    <div class="d-grid">
+                        <input type="submit" value="Search" class="btn btn-success">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+
+    <!-- Table section -->
+    @if (Model.Employees != null && Model.Employees.Count > 0 && ViewBag.SelectedMonth != null && ViewBag.SelectedYear != null)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table table-nowrap mb-0">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                @for (int i = 1; i <= DateTime.DaysInMonth((int)ViewBag.SelectedYear, (int)ViewBag.SelectedMonth); i++)
+                                {
+                                    <th>@i</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var employee in Model.Employees)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="table-avatar mr-2">
+                                                <a class="avatar avatar-xs" href="/Search/EmployeeProfile?searchValue=@employee.Emp_id" target="_blank">
+                                                    <img alt="" src="@Url.Content(employee.Emp_Image)" style="width: 30px; height: 30px; object-fit: cover;">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <h2><a href="/Search/EmployeeProfile?searchValue=@employee.Emp_id" target="_blank">@employee.First_Name @employee.Last_Name</a></h2>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    @for (int i = 1; i <= DateTime.DaysInMonth((int)ViewBag.SelectedYear, (int)ViewBag.SelectedMonth); i++)
+                                    {
+                                        var attendance = Model.AttendanceRecords.FirstOrDefault(a => a.Emp_id == employee.Emp_id && a.Date.Day == i);
+                                        <td>
+                                            @if (attendance != null)
+                                            {
+                                                <!-- Display attendance status -->
+                                                <a href="#" class="attendance-icon" data-bs-toggle="modal" data-bs-target="#attendance_info_@(employee.Emp_id)@i">
+                                                    <i class="fa fa-check text-success"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <!-- Handle case where attendance is not marked -->
+                                                <a href="#" class="attendance-icon" data-bs-toggle="modal" data-bs-target="#attendance_info_@(employee.Emp_id)@i" disabled>
+                                                    <i class="fa fa-close text-danger"></i>
+                                                </a>
+                                            }
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.Employees != null && Model.Employees.Count > 0 && (ViewBag.SelectedMonth == null || ViewBag.SelectedYear == null))
+    {
+        <div class="alert alert-warning" role="alert">
+            Please select both month and year to view attendance records.
+        </div>
+    }
+    else if (Model.Employees != null && Model.Employees.Count > 0 && Model.AttendanceRecords != null && Model.AttendanceRecords.Count == 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            No attendance records found for the selected criteria.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Employee not found or invalid search criteria.
+        </div>
+    }
+</div>
+
+<!-- Attendance Modals -->
+@foreach (var employee in Model.Employees)
+{
+    for (int i = 1; i <= DateTime.DaysInMonth(ViewBag.SelectedYear, ViewBag.SelectedMonth); i++)
+    {
+        var attendance = Model.AttendanceRecords.FirstOrDefault(a => a.Emp_id == employee.Emp_id && a.Date.Day == i);
+        if (attendance != null)
+        {
+            <div class="modal custom-modal fade" id="attendance_info_@employee.Emp_id@i" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Attendance Info - @attendance.Date.ToString("MMM yyyy")</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Modal content using Razor syntax -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!-- Left side content -->
+                                    <div class="card punch-status">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Timesheet <small class="text-muted">@attendance.Date.ToString("dd MMM yyyy")</small></h5>
+                                            <!-- Timesheet details -->
+                                            <div class="punch-det">
+                                                <h6>Punch In at</h6>
+                                                <p>
+                                                    @{
+                                                        var firstPunchIn = Model.Checks
+                                                            .Where(c => c.Emp_id == attendance.Emp_id && c.CheckType == "CheckIn" && c.CheckTime.Date == attendance.Date.Date)
+                                                            .OrderBy(c => c.CheckTime)
+                                                            .FirstOrDefault();
+
+                                                        if (firstPunchIn != null)
+                                                        {
+                                                            @firstPunchIn.CheckTime.ToString("ddd, dd MMM yyyy hh:mm tt")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>N/A</span>
+                                                        }
+                                                    }
+                                                </p>
+                                            </div>
+                                            <div class="punch-info">
+                                                <div class="punch-hours">
+                                                    <span>@attendance.Work_Hours.ToString("0.##") hrs</span>
+                                                </div>
+                                            </div>
+                                            <div class="punch-det">
+                                                <h6>Punch Out at</h6>
+                                                <p>
+                                                    @{
+                                                        var lastPunchOut = Model.Checks
+                                                            .Where(c => c.Emp_id == attendance.Emp_id && c.CheckType == "CheckOut" && c.CheckTime.Date == attendance.Date.Date)
+                                                            .OrderByDescending(c => c.CheckTime)
+                                                            .FirstOrDefault();
+
+                                                        if (lastPunchOut != null)
+                                                        {
+                                                            @lastPunchOut.CheckTime.ToString("ddd, dd MMM yyyy hh:mm tt")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>N/A</span>
+                                                        }
+                                                    }
+                                                </p>
+                                            </div>
+                                            <div class="statistics">
+                                                <div class="row">
+                                                    <!-- Additional statistics if needed -->
+                                                    <div class="col-md-6 col-6 text-center">
+                                                        <div class="stats-box">
+                                                            <p>Break</p>
+                                                            <h6>@attendance.Break_Hours.ToString("0.##") hrs</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-6 text-center">
+                                                        <div class="stats-box">
+                                                            <p>Work Hours</p>
+                                                            <h6>@attendance.Work_Hours.ToString("0.##") hrs</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Right side content -->
+                                    <div class="card recent-activity">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Activity</h5>
+                                            <ul class="res-activity-list">
+                                                <!-- Display check-in/check-out activities -->
+                                                @if (Model.Checks != null)
+                                                {
+                                                    foreach (var check in Model.Checks.Where(c => c.Emp_id == employee.Emp_id && c.CheckTime.Date == attendance.Date.Date))
+                                                    {
+                                                        <li>
+                                                            <p>@check.CheckType <span class="text-muted">@check.CheckTime.ToString("hh:mm tt")</span></p>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @functions {
+        // Helper function to get month names
+        IEnumerable<SelectListItem> GetMonthNames()
+        {
+            string[] monthNames = {
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        };
+
+            return monthNames.Select((monthName, index) => new SelectListItem
+            {
+                Text = monthName,
+                Value = (index + 1).ToString()
+            });
+        }
+
+        // Helper function to get recent years
+        IEnumerable<SelectListItem> GetRecentYears()
+        {
+            int currentYear = DateTime.Now.Year;
+            List<SelectListItem> years = new List<SelectListItem>();
+
+            for (int i = currentYear; i >= currentYear - 10; i--)
+            {
+                years.Add(new SelectListItem
+                {
+                    Text = i.ToString(),
+                    Value = i.ToString()
+                });
+            }
+
+            return years;
+        }
+    }
+}

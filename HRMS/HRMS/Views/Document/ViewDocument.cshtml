@@ -1,0 +1,179 @@
+﻿@model HRMS.ViewModels.AddDocumentViewModel
+
+@{
+    ViewBag.Title = "View Document";
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<!-- jQuery and jQuery UI JavaScript -->
+
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Employee Management</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Document/ViewDocument">Document</a></li>
+                    <li class="breadcrumb-item active">View All Document</li>
+                </ul>
+            </div>
+            <div class="col-auto float-end ms-auto">
+                <a href="#" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_Document"><i class="fa fa-plus"></i>Add Document</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+    <div class="text-center mt-4">
+        @using (Html.BeginForm("ViewDocument", "Document", FormMethod.Get, new { @class = "form-inline" }))
+        {
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="searchBy" class="mr-2">Search By:</label>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButton("searchBy", "ByEmployeeID", true, new { id = "searchByEmployeeID", @class = "form-check-input" })
+                    <label class="form-check-label" for="searchByEmployeeID">Employee ID</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButton("searchBy", "ByDocumentName", false, new { id = "ByDocumentName", @class = "form-check-input" })
+                    <label class="form-check-label" for="ByDocumentName">Document Name</label>
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                @Html.TextBox("searchValue", null, new { @class = "form-control", placeholder = "Enter search term" })
+                <br />
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
+            </div>
+        }
+    </div>
+    <br />
+    <!-- /Grid View Container -->
+    <!-- Employee Table -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive list-view" id="employeeList">
+                <table class="table table-striped custom-table datatable">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Document_Type_id</th>
+                            <th>Document Name</th>
+                            <th>Document Issue Date</th>
+                            <th>Download Document</th>
+                            <th class="text-end no-sort">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Emp_Documents.Any())
+                        {
+                            foreach (var Education in Model.Emp_Documents)
+                            {
+                                <tr>
+                                    <td>@Education.Emp_Id</td>
+                                    <td>@Education.Document_Type_id</td>
+                                    <td>@Education.Name</td>
+                                    <td>@Education.Issue_Date </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(Education.File))
+                                        {
+                                            <a href="@Url.Content(Education.File)" target="_blank" , class="btn btn-secondary ml">Download Document</a>
+                                        }
+                                        else
+                                        {
+                                            <span>No Document Uploaded</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    @Html.ActionLink("Edit Document", "EditCNIC", new { id = Education.id }, new { @class = "dropdown-item" })
+                                                </li>
+                                                <li>
+                                                    @using (Html.BeginForm("DeleteCNIC", "CNIC", new { id = Education.id }, FormMethod.Post, new { onsubmit = "return confirm('Are you sure you want to delete this Education?');" }))
+                                                    {
+                                                        <button type="submit" class="dropdown-item">Delete</button>
+                                                    }
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6">No Document found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Education Modal -->
+    <div id="add_Document" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Education</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AddDocument", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee <span class="text-danger">*</span></label>
+                                @Html.DropDownListFor(model => model.AddDocument.Emp_Id, new SelectList(Model.Employees, "Emp_Id", "First_Name"), "Select Employee", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AddDocument.Emp_Id, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AddDocument.Document_Type_id, "Document Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.AddDocument.Document_Type_id, new SelectList(Model.DocumentTypes, "EDT_id", "Docuement_Type"), "Select Document Type", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AddDocument.Document_Type_id, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Document Name <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.AddDocument.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AddDocument.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Document Issue Date <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.AddDocument.Issue_Date, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @Value = DateTime.Now.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.AddDocument.Issue_Date, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Upload Document <span class="text-danger">*</span></label>
+                                <input type="file" name="CNICFile" class="form-control-file" />
+                                @Html.ValidationMessageFor(model => model.AddDocument.File, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

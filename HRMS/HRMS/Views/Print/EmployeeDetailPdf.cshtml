@@ -1,0 +1,185 @@
+﻿@model HRMS.ViewModels.AddEmployeeViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Employee Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            border: 1px solid #ddd;
+            padding: 7px; /* Reduced padding */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .profile-pic {
+            text-align: center;
+            margin-bottom: 7px; /* Reduced margin */
+        }
+
+            .profile-pic img {
+                border-radius: 50%;
+                border: 2px solid #ddd;
+                padding: 3px;
+                width: 120px;
+                height: 120px;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 7px; /* Reduced margin */
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px; /* Reduced padding */
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .section-title {
+            background-color: #f8f8f8;
+            padding: 6px; /* Reduced padding */
+            margin-top: 5px; /* Reduced margin */
+            margin-bottom: 5px; /* Reduced margin */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Details</h1>
+
+        <div class="profile-pic">
+            <img src="@Model.Emp_Image_Full_Url" alt="Employee Image" />
+        </div>
+
+        <div class="section-title">Personal Information</div>
+        <table>
+            <tr>
+                <th>Employee ID</th>
+                <td>@Model.Emp_Id</td>
+            </tr>
+            <tr>
+                <th>First Name</th>
+                <td>@Model.First_Name</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>@Model.Last_Name</td>
+            </tr>
+            <tr>
+                <th>Father/Husband Name</th>
+                <td>@Model.FatherHusbandName</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>@Model.Gender</td>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <td>@Model.DOB.ToString("yyyy-MM-dd")</td>
+            </tr>
+            <tr>
+                <th>Marital Status</th>
+                <td>@Model.Marital_Status</td>
+            </tr>
+            <tr>
+                <th>Religion</th>
+                <td>@Model.Religions</td>
+            </tr>
+            <tr>
+                <th>Nationality</th>
+                <td>@Model.Nationality</td>
+            </tr>
+            <tr>
+                <th>Blood Group</th>
+                <td>@Model.Blood_Group</td>
+            </tr>
+        </table>
+
+        <div class="section-title">Job Information</div>
+        <table>
+            <tr>
+                <th>Joining Date</th>
+                <td>@Model.Joining_date.ToString("yyyy-MM-dd")</td>
+            </tr>
+            <tr>
+                <th>Job Title</th>
+                <td>@Model.JobTitle</td>
+            </tr>
+            <tr>
+                <th>Department ID</th>
+                <td>@Model.DepatmentId</td>
+            </tr>
+            <tr>
+                <th>Branch ID</th>
+                <td>@Model.Branch_id</td>
+            </tr>
+            <tr>
+                <th>Designation</th>
+                <td>@Model.Designation</td>
+            </tr>
+            <tr>
+                <th>Employment Type</th>
+                <td>@Model.Employment_Type</td>
+            </tr>
+        </table>
+
+        <div class="section-title">Contact Information</div>
+        <table>
+            <tr>
+                <th>Email</th>
+                <td>@Model.email</td>
+            </tr>
+            <tr>
+                <th>Official Email</th>
+                <td>@Model.Official_Email</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>@Model.phone</td>
+            </tr>
+            <tr>
+                <th>Landline</th>
+                <td>@Model.landline</td>
+            </tr>
+        </table>
+
+        <div class="section-title">Additional Information</div>
+        <table>
+            <tr>
+                <th>Location</th>
+                <td>@Model.Location</td>
+            </tr>
+            <tr>
+                <th>Machine Code</th>
+                <td>@Model.Machine_Code</td>
+            </tr>
+            <tr>
+                <th>Probation</th>
+                <td>@Model.Probation</td>
+            </tr>
+            <tr>
+                <th>Probation Confirmation Date</th>
+                <td>@Model.Probation_Confirmation_Date</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

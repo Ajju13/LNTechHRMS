@@ -1,0 +1,71 @@
+﻿@model HRMS.Models.Relative
+
+@{
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Employee Managment</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Relative/ViewRelative">Relative</a></li>
+                    <li class="breadcrumb-item active">Edit Relative</li>
+                </ul>
+            </div>
+            <div class="col-auto float-end ms-auto">
+                <a href="/Relative/ViewRelative" class="btn add-btn"><i class="fa fa-bars"></i> View All Relative</a>
+
+            </div>
+        </div>
+    </div>
+    <!-- Edit Education Modal -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    @using (Html.BeginForm("EditRelative", "Relative", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Relative_id)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Relative Name <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Relationship <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Relationship, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Relationship, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Address <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Mobile_No <span class="text-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.Mobile_No, new { @class = "form-control", autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.Mobile_No, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
