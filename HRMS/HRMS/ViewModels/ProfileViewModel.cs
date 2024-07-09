@@ -37,6 +37,8 @@ namespace HRMS.ViewModels
 
         public string CNICNo { get; set; }
 
+        public string CNICAttachment { get; set; }
+
         public DateTime CNICExpiry { get; set; }
 
         public string RelatvePhone { get; set; }
@@ -56,6 +58,8 @@ namespace HRMS.ViewModels
 
         public List<EducationViewModel> EducationHistory { get; set; }
         public List<ExperienceViewModel> ExperienceHistory { get; set; }
+
+        public List<AllDocumentsViewModel> AllDocuments { get; set; }
         public Employee Employee { get; set; }
 
         public string Frequency { get; set; }
@@ -66,6 +70,10 @@ namespace HRMS.ViewModels
         public bool Tax_Exempted_ { get; set; }
         public long Sal_id { get; set; }
 
+    }
+
+    public class AllDocumentsViewModel
+    {
         public string DocumentName { get; set; }
         public string File { get; set; }
         public string Issue_Date { get; set; }

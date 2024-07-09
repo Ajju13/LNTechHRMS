@@ -7,267 +7,286 @@
 }
 
 
-        <!-- Page Content -->
-        <div class="content container-fluid">
+<!-- Page Content -->
+<div class="content container-fluid">
 
-            <!-- Page Header -->
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3 class="page-title">Profile</h3>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/Dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Profile</li>
-                        </ul>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Profile</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Dashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Profile</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <div class="card mb-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-img-wrap">
+                            <div class="profile-img">
+                                <a href="#"><img alt="" src="@Model.Emp_Image"></a>
+                            </div>
+                        </div>
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left">
+                                        <h3 class="user-name m-t-0 mb-0">@Model.First_Name</h3>
+                                        <small class="text-muted">@Model.JobTitle</small>
+                                        <div class="staff-id">Employee ID : @Model.Emp_Id</div>
+                                        <div class="small doj text-muted">Date of Join : @Model.Joining_date.ToShortDateString()</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Phone:</div>
+                                            <div class="text"><a href="">@Model.Phone</a></div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Email:</div>
+                                            <div class="text"><a href="">@Model.Email</a></div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Birthday:</div>
+                                            <div class="text">@Model.DOB.ToShortDateString()</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Address:</div>
+                                            <div class="text">@Model.Location</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Gender:</div>
+                                            <div class="text">@Model.Gender</div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <!-- /Page Header -->
+        </div>
+    </div>
 
-            <div class="card mb-0">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="profile-view">
-                                <div class="profile-img-wrap">
-                                    <div class="profile-img">
-                                        <a href="#"><img alt="" src="@Model.Emp_Image"></a>
-                                    </div>
-                                </div>
-                                <div class="profile-basic">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="profile-info-left">
-                                                <h3 class="user-name m-t-0 mb-0">@Model.First_Name</h3>
-                                                <small class="text-muted">@Model.JobTitle</small>
-                                                <div class="staff-id">Employee ID : @Model.Emp_Id</div>
-                                                <div class="small doj text-muted">Date of Join : @Model.Joining_date.ToShortDateString()</div>
+    <div class="card tab-box">
+        <div class="row user-tabs">
+            <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                <ul class="nav nav-tabs nav-tabs-bottom">
+                    <li class="nav-item"><a href="/Dashboard/my" data-bs-toggle="tab" class="nav-link active">Profile</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+
+        <!-- Profile Info Tab -->
+        <div id="emp_profile" class="pro-overview tab-pane fade show active">
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Personal Informations </h3>
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">CNIC No.</div>
+                                    <div class="text"> @Model.CNICNo</div>
+                                </li>
+
+                                <li>
+                                    <div class="title">Land Line</div>
+                                    <div class="text"><a href="">@Model.Landline</a></div>
+                                </li>
+                                <li>
+                                    <div class="title">Nationality</div>
+                                    <div class="text">@Model.Nationality</div>
+                                </li>
+                                <li>
+                                    <div class="title">Religion</div>
+                                    <div class="text">@Model.Religions</div>
+                                </li>
+                                <li>
+                                    <div class="title">Marital status</div>
+                                    <div class="text">@Model.Marital_Status</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Emergency Contact</h3>
+                            <h5 class="section-title">Primary</h5>
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Name</div>
+                                    <div class="text">@Model.RelativeName</div>
+                                </li>
+                                <li>
+                                    <div class="title">Relationship</div>
+                                    <div class="text">@Model.RelationShip</div>
+                                </li>
+                                <li>
+                                    <div class="title">Phone </div>
+                                    <div class="text">@Model.RelatvePhone</div>
+                                </li>
+                                <li>
+                                    <div class="title">Address </div>
+                                    <div class="text">@Model.Relative_Address</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Bank information</h3>
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Bank name</div>
+                                    <div class="text">@Model.BankName</div>
+                                </li>
+                                <li>
+                                    <div class="title">Bank account No.</div>
+                                    <div class="text">@Model.BankAccountNo</div>
+                                </li>
+                                <li>
+                                    <div class="title">Account Title</div>
+                                    <div class="text">@Model.AccountTitle</div>
+                                </li>
+                                <li>
+                                    <div class="title">Branch Name</div>
+                                    <div class="text">@Model.BranchName</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Salary</h3>
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Payment Frequency</div>
+                                    <div class="text">@Model.Frequency</div>
+                                </li>
+                                <li>
+                                    <div class="title">Payment Method</div>
+                                    <div class="text">@Model.Payment_Method</div>
+                                </li>
+                                <li>
+                                    <div class="title">NTN #</div>
+                                    <div class="text">@Model.NTN_Number</div>
+                                </li>
+                                <li>
+                                    <div class="title">Probation Salary</div>
+                                    <div class="text">@Model.Probation_Salary</div>
+                                </li>
+                                <li>
+                                    <div class="title">Gross Salary</div>
+                                    <div class="text">@Model.After_Probation_Gross_Salary</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Education Information</h3>
+                            <div class="experience-box">
+                                <ul class="experience-list">
+                                    @foreach (var education in Model.EducationHistory)
+                                    {
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a class="name">@education.InstitutionName</a>
+                                                    <div>@education.Degree</div>
+                                                    <span class="time">@education.FromDate.ToShortDateString() - @education.ToDate.ToShortDateString()</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Experience</h3>
+                            <div class="experience-box">
+                                <ul class="experience-list">
+                                    @foreach (var experience in Model.ExperienceHistory)
+                                    {
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a class="name">@experience.Company_name</a>
+                                                    <div>@experience.Position</div>
+                                                    <span class="time">@experience.TotalExperience</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Employee Documents</h3>
+                            <ul class="experience-list">
+                                @foreach (var Document in Model.AllDocuments)
+                                {
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a class="name">@Document.DocumentName</a>
+                                                <div>@Document.Issue_Date</div>
+                                                <a href="@Url.Content(Document.File)" target="_blank" class="btn btn-primary ml-2">Download Document</a>
                                             </div>
                                         </div>
-                                        <div class="col-md-7">
-                                            <ul class="personal-info">
-                                                <li>
-                                                    <div class="title">Phone:</div>
-                                                    <div class="text"><a href="">@Model.Phone</a></div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">Email:</div>
-                                                    <div class="text"><a href="">@Model.Email</a></div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">Birthday:</div>
-                                                    <div class="text">@Model.DOB.ToShortDateString()</div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">Address:</div>
-                                                    <div class="text">@Model.Location</div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">Gender:</div>
-                                                    <div class="text">@Model.Gender</div>
-                                                </li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                               
-                            </div>
+                                    </li>
+                                }
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="card tab-box">
-                <div class="row user-tabs">
-                    <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
-                        <ul class="nav nav-tabs nav-tabs-bottom">
-                            <li class="nav-item"><a href="/Dashboard/my" data-bs-toggle="tab" class="nav-link active">Profile</a></li>
-                            
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-content">
-
-                <!-- Profile Info Tab -->
-                <div id="emp_profile" class="pro-overview tab-pane fade show active">
-                    <div class="row">
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Personal Informations </h3>
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">CNIC No.</div>
-                                            <div class="text"> @Model.CNICNo</div>
-                                        </li>
-
-                                        <li>
-                                            <div class="title">Land Line</div>
-                                            <div class="text"><a href="">@Model.Landline</a></div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Nationality</div>
-                                            <div class="text">@Model.Nationality</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Religion</div>
-                                            <div class="text">@Model.Religions</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Marital status</div>
-                                            <div class="text">@Model.Marital_Status</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Emergency Contact</h3>
-                                    <h5 class="section-title">Primary</h5>
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Name</div>
-                                            <div class="text">@Model.RelativeName</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Relationship</div>
-                                            <div class="text">@Model.RelationShip</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Phone </div>
-                                            <div class="text">@Model.RelatvePhone</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Address </div>
-                                            <div class="text">@Model.Relative_Address</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Bank information</h3>
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Bank name</div>
-                                            <div class="text">@Model.BankName</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Bank account No.</div>
-                                            <div class="text">@Model.BankAccountNo</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Account Title</div>
-                                            <div class="text">@Model.AccountTitle</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Branch Name</div>
-                                            <div class="text">@Model.BranchName</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Salary</h3>
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Payment Frequency</div>
-                                            <div class="text">@Model.Frequency</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Payment Method</div>
-                                            <div class="text">@Model.Payment_Method</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">NTN #</div>
-                                            <div class="text">@Model.NTN_Number</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Probation Salary</div>
-                                            <div class="text">@Model.Probation_Salary</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Gross Salary</div>
-                                            <div class="text">@Model.After_Probation_Gross_Salary</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                     </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">
-                                        Education Information
-                                    </h3>
-                                    <div class="experience-box">
-                                        <ul class="experience-list">
-                                            @foreach (var education in Model.EducationHistory)
-                                            {
-                                                <li>
-                                                    <div class="experience-user">
-                                                        <div class="before-circle"></div>
-                                                    </div>
-                                                    <div class="experience-content">
-                                                        <div class="timeline-content">
-                                                            <a  class="name">@education.InstitutionName</a>
-                                                            <div>@education.Degree</div>
-                                                            <span class="time">@education.FromDate.ToShortDateString() - @education.ToDate.ToShortDateString()</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">
-                                        Experience
-                                    </h3>
-                                    <div class="experience-box">
-                                        <ul class="experience-list">
-                                            @foreach (var experience in Model.ExperienceHistory)
-                                            {
-                                                <li>
-                                                    <div class="experience-user">
-                                                        <div class="before-circle"></div>
-                                                    </div>
-                                                    <div class="experience-content">
-                                                        <div class="timeline-content">
-                                                            <a class="name">@experience.Company_name</a>
-                                                            <div>@experience.Position</div>
-                                                            <span class="time">@experience.TotalExperience</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-        </div>

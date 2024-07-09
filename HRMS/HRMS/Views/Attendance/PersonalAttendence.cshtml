@@ -3,7 +3,11 @@
 @{
     ViewBag.Title = "Attendance";
     Layout = "~/Views/Shared/View.cshtml";
+    var today = DateTime.Today;
+    var todayAttendance = Model.AttendanceRecords.Where(a => a.Date.Date == today).ToList();
+    var loggedInEmployeeId = User.Identity.Name; // Assuming User.Identity.Name gives the employee ID
 }
+@using System.Data.Entity;
 
 <div class="content container-fluid">
     <!-- Page Header -->
@@ -19,8 +23,16 @@
         </div>
     </div>
     <!-- /Page Header -->
+
+    @if (!todayAttendance.Any())
+    {
+        <div class="alert alert-info">
+            <p>No attendance records found for today.</p>
+        </div>
+    }
+
     <!-- Display employee attendance records -->
-    @foreach (var attendance in Model.AttendanceRecords)
+    @foreach (var attendance in todayAttendance)
     {
         <div class="row">
             <div class="col-md-4">
@@ -100,7 +112,34 @@
                     </div>
                 </div>
             </div>
-            <!-- Add more columns as needed -->
+
+            <!-- Activity Section -->
+            <div class="col-md-8">
+                <div class="card recent-activity">
+                    <div class="card-body">
+                        <h5 class="card-title">Today's Activity</h5>
+                        <ul class="res-activity-list">
+                            @if (Model.Checks.Any(c => c.Emp_id == attendance.Emp_id && c.CheckTime.Date == attendance.Date.Date))
+                            {
+                                foreach (var check in Model.Checks.Where(c => c.Emp_id == attendance.Emp_id && c.CheckTime.Date == attendance.Date.Date))
+                                {
+                                    <li>
+                                        <p>@check.CheckType <span class="text-muted">@check.CheckTime.ToString("hh:mm tt")</span></p>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li>
+                                    <span>No activity recorded for today.</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- End Activity Section -->
+
         </div>
     }
 </div>

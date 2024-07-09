@@ -105,6 +105,15 @@ namespace HRMS.Controllers
                                          ToDate = exp.To_Date
                                      }).ToList();
 
+            var AllDocuments = (from exp in db.EmpDocuments
+                                     where exp.Emp_Id == employeeData.Employee.Emp_id
+                                     select new AllDocumentsViewModel
+                                     {
+                                         DocumentName = exp.Name,
+                                         File = exp.File,
+                                         Issue_Date = exp.Issue_Date,
+                                     }).ToList();
+
             // Calculate total experience for each experience entry
             foreach (var exp in experienceHistory)
             {
@@ -151,10 +160,9 @@ namespace HRMS.Controllers
                 NTN_Number = employeeData?.Salary != null ? employeeData.Salary.NTN_Number : "N/A",
                 Frequency = employeeData?.Salary != null ? employeeData.Salary.Frequency : "N/A",
                 Payment_Method = employeeData?.Salary != null ? employeeData.Salary.Payment_Method : "N/A",
-                DocumentName = employeeData?.EmployeeDocument != null ? employeeData.EmployeeDocument.Name : "N/A",
-                File = employeeData?.EmployeeDocument != null ? employeeData.EmployeeDocument.File : "N/A",
                 EducationHistory = educationHistory, // Assuming educationHistory is populated elsewhere
-                ExperienceHistory = experienceHistory
+                ExperienceHistory = experienceHistory,
+                AllDocuments = AllDocuments,
             };
 
             return View(viewModel);

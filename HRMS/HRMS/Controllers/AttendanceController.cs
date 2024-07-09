@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Newtonsoft.Json;
+using HRMS.Functions;
 
 
 namespace HRMS.Controllers
@@ -48,7 +49,7 @@ namespace HRMS.Controllers
                                 a.Date >= startDate && a.Date <= endDate)
                     .ToList();
 
-                // Fetch checks corresponding to attendance records
+                // Fetch checks corresponding to attendance records if needed
                 viewModel.Checks = (from c in db.Check
                                     join a in db.Attendances on new { c.Emp_id, CheckDate = DbFunctions.TruncateTime(c.CheckTime) } equals new { a.Emp_id, CheckDate = DbFunctions.TruncateTime(a.Date) }
                                     where a.Emp_id == searchValue && DbFunctions.TruncateTime(a.Date) >= startDate.Date && DbFunctions.TruncateTime(a.Date) <= endDate.Date
@@ -79,7 +80,7 @@ namespace HRMS.Controllers
                                 a.Date >= startDate && a.Date <= endDate)
                     .ToList();
 
-                // Fetch checks corresponding to attendance records
+                // Fetch checks corresponding to attendance records if needed
                 viewModel.Checks = (from c in db.Check
                                     join a in db.Attendances on new { c.Emp_id, CheckDate = DbFunctions.TruncateTime(c.CheckTime) } equals new { a.Emp_id, CheckDate = DbFunctions.TruncateTime(a.Date) }
                                     where DbFunctions.TruncateTime(a.Date) >= startDate.Date && DbFunctions.TruncateTime(a.Date) <= endDate.Date
@@ -107,7 +108,7 @@ namespace HRMS.Controllers
                                 a.Date >= startDate && a.Date <= endDate)
                     .ToList();
 
-                // Fetch checks corresponding to att    endance records
+                // Fetch checks corresponding to attendance records if needed
                 viewModel.Checks = (from c in db.Check
                                     join a in db.Attendances on new { c.Emp_id, CheckDate = DbFunctions.TruncateTime(c.CheckTime) } equals new { a.Emp_id, CheckDate = DbFunctions.TruncateTime(a.Date) }
                                     where DbFunctions.TruncateTime(a.Date) >= startDate.Date && DbFunctions.TruncateTime(a.Date) <= endDate.Date
@@ -125,6 +126,7 @@ namespace HRMS.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
         public ActionResult PersonalAttendence()
         {
             // Check if user is authenticated
@@ -184,11 +186,16 @@ namespace HRMS.Controllers
                 .Where(c => empIds.Contains(c.Emp_id))
                 .ToList();
 
-            ViewBag.SelectedEmployeeId = user.Emp_Id; // Set as per your requirement
+            // Initialize AttendanceService and update attendance for today if not already created
+            var attendanceService = new AttendanceService(db);
+            attendanceService.UpdateAttendanceForChecks(user.Emp_Id, DateTime.Today);
+
+            // Set ViewBag.SelectedEmployeeId for use in the view
+            ViewBag.SelectedEmployeeId = user.Emp_Id;
+
+            // Pass other necessary data to the view model
             ViewBag.SelectedMonth = currentMonth;
             ViewBag.SelectedYear = currentYear;
-
-            // Pass the selected date to the view model
             viewModel.SelectedDate = new DateTime(currentYear, currentMonth, 1);
 
             return View(viewModel);
@@ -213,10 +220,10 @@ namespace HRMS.Controllers
                 .FirstOrDefault();
 
             // Determine the next check type
-            string nextCheckType = "IN"; // Default to CheckIn
-            if (lastCheck != null && lastCheck.CheckType == "IN")
+            string nextCheckType = "CheckIn"; // Default to CheckIn
+            if (lastCheck != null && lastCheck.CheckType == "CheckIn")
             {
-                nextCheckType = "OUT";
+                nextCheckType = "CheckOut";
             }
 
             // Get the user's IP address
@@ -229,7 +236,7 @@ namespace HRMS.Controllers
             var newCheck = new Check
             {
                 Emp_id = empId,
-                CheckTime = DateTime.UtcNow,
+                CheckTime = DateTime.Now,
                 CheckType = nextCheckType,
                 IPAddress = ipAddress
             };
@@ -243,10 +250,12 @@ namespace HRMS.Controllers
             db.Address.Add(location);
             db.SaveChanges();
 
-            // Return success response
-            return Json(new { success = true, message = "Check added successfully." }, JsonRequestBehavior.AllowGet);
-        }
+            // Update attendance using AttendanceService
+            var attendanceService = new AttendanceService(db);
+            attendanceService.UpdateAttendanceForChecks(empId, DateTime.Today);
 
+            return RedirectToAction("Index", "Dashboard");
+        }
 
         protected override void Dispose(bool disposing)
         {
