@@ -11,7 +11,6 @@ namespace HRMS.Models
         [Key]
         public long Sal_id { get; set; }
         public string Emp_id { get; set; }
-        public long Payroll_Type { get; set; }
         public string Frequency { get; set; }
         public string NTN_Number { get; set; }
         public string Payment_Method { get; set; }

@@ -57,6 +57,10 @@ namespace HRMS.Controllers
                                 from relative in relatives.DefaultIfEmpty()
                                 join b in db.Banks on e.Emp_id equals b.Emp_Id into banks
                                 from bank in banks.DefaultIfEmpty()
+                                join s in db.Salaries on e.Emp_id equals s.Emp_id into Salary
+                                from sal in Salary.DefaultIfEmpty()
+                                join ed in db.EmpDocuments on e.Emp_id equals ed.Emp_Id into EmpDocu
+                                from EmployeeDocuments in EmpDocu.DefaultIfEmpty()
                                 where l.Username == username
                                 select new
                                 {
@@ -66,7 +70,9 @@ namespace HRMS.Controllers
                                     Login = l,
                                     CNIC = cnic,
                                     Relative = relative,
-                                    Bank = bank
+                                    Bank = bank,
+                                    Salary = sal,
+                                    EmployeeDocument = EmployeeDocuments,
                                 }).FirstOrDefault();
 
             if (employeeData == null)
@@ -140,6 +146,13 @@ namespace HRMS.Controllers
                 BankAccountNo = employeeData?.Bank != null ? employeeData.Bank.Account_No : "N/A",
                 AccountTitle = employeeData?.Bank != null ? employeeData.Bank.Account_Title : "N/A",
                 BranchName = employeeData?.Bank != null ? employeeData.Bank.Branch_Name : "N/A",
+                After_Probation_Gross_Salary = employeeData?.Salary != null ? employeeData.Salary.After_Probation_Gross_Salary : 0,
+                Probation_Salary = employeeData?.Salary != null ? employeeData.Salary.Probation_Salary : 0,
+                NTN_Number = employeeData?.Salary != null ? employeeData.Salary.NTN_Number : "N/A",
+                Frequency = employeeData?.Salary != null ? employeeData.Salary.Frequency : "N/A",
+                Payment_Method = employeeData?.Salary != null ? employeeData.Salary.Payment_Method : "N/A",
+                DocumentName = employeeData?.EmployeeDocument != null ? employeeData.EmployeeDocument.Name : "N/A",
+                File = employeeData?.EmployeeDocument != null ? employeeData.EmployeeDocument.File : "N/A",
                 EducationHistory = educationHistory, // Assuming educationHistory is populated elsewhere
                 ExperienceHistory = experienceHistory
             };
@@ -353,6 +366,20 @@ namespace HRMS.Controllers
                     };
 
                     db.EmployeeInfos.Add(employeeInfo);
+
+                    var sal = new Salary
+                    {
+                        Emp_id = newEmpId,
+                        Frequency = model.Frequency,
+                        Payment_Method = model.Payment_Method,
+                        Probation_Salary = model.Probation_Salary,
+                        After_Probation_Gross_Salary = model.After_Probation_Gross_Salary,
+                        Tax_Exempted_ = model.Tax_Exempted_,
+                        Description = "null"
+                    };
+
+                    db.Salaries.Add(sal);
+
 
                     // Save changes to the database
                     db.SaveChanges();

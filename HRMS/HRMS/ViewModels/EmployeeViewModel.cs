@@ -81,6 +81,15 @@ namespace HRMS.ViewModels
         public string Employment_Type { get; set; }
         public string Machine_Code { get; set; }
 
+        public double Probation_Salary { get; set; }
+
+        public double After_Probation_Gross_Salary { get; set; }
+
+        public string Description { get; set; }
+        public bool Tax_Exempted_ { get; set; }
+        public string Payment_Method { get; set; }
+        public string Frequency { get; set; }
+
 
     }
 

@@ -27,7 +27,6 @@ namespace HRMS.Models
         [Key]
         public string Emp_id { get; set; }
         public string First_Name { get; set; }
-        public string Middle_Name { get; set; }
         public string Last_Name { get; set; }
         public string Emp_Image { get; set; }
         public string Father_s_Husband_s_Name { get; set; }
@@ -61,5 +60,7 @@ namespace HRMS.Models
         public virtual ICollection<Attendances> Attendances { get; set; }
 
         public virtual ICollection<Check> Check { get; set; }
+
+        public virtual ICollection<SalaryRevision> SalaryRevision { get; set; }
     }
 }

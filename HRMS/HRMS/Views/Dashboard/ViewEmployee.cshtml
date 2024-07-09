@@ -516,7 +516,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Probation <span class="text-danger">*</span></label>
-                            <select class="form-control" id="Probation" name="Probation">
+                            <select class="form-control" id="Probation" name="Probation" onchange="handleProbationChange()">
                                 <option value="true">Yes</option>
                                 <option value="false">No</option>
                             </select>
@@ -524,13 +524,66 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="probation-end-date-group">
                         <div class="form-group">
                             <label for="Probation_Confirmation_Date">Probation End Date: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control datepicker" id="Probation_Confirmation_Date" name="Probation_Confirmation_Date" autocomplete="off" data-provide="datepicker" data-date-format="yyyy-mm-dd">
                             @Html.ValidationMessageFor(model => model.AddEmployee.Probation_Confirmation_Date, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
+                    <div class="col-md-6" id="probation-salary-group">
+                        <div class="form-group">
+                            <label for="Probation_Salary">Probation Salary: <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="Probation_Salary" name="Probation_Salary">
+                            @Html.ValidationMessageFor(model => model.AddEmployee.Probation_Salary, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label for="After_Probation_Gross_Salary">Gross Salary (After Probation) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control datepicker" id="After_Probation_Gross_Salary" name="After_Probation_Gross_Salary" autocomplete="off">
+                            @Html.ValidationMessageFor(model => model.AddEmployee.After_Probation_Gross_Salary, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Payment Frequency <span class="text-danger">*</span></label>
+                            <select class="form-control" id="Frequency" name="Frequency">
+                                <option value="Monthly">Monthly</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Daily">Daily</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.AddEmployee.Frequency, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Payment Method <span class="text-danger">*</span></label>
+                            <select class="form-control" id="Payment_Method" name="Payment_Method">
+                                <option value="Bank">Bank Transfeer</option>
+                                <option value="Cash">Cash Payment</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.AddEmployee.Payment_Method, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tax Exempt <span class="text-danger">*</span></label>
+                            <select class="form-control" id="Tax_Exempted_" name="Tax_Exempted_">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.AddEmployee.Tax_Exempted_, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
 
                     <div class="col-md-6">
                         <div class="form-group">
@@ -697,5 +750,41 @@
                   $('.view-icons .list-view').removeClass('active');
               });
           });
+
+          function handleProbationChange() {
+              var probationSelect = document.getElementById('Probation');
+              var probationEndDateGroup = document.getElementById('probation-end-date-group');
+              var probationEndDateInput = document.getElementById('Probation_Confirmation_Date');
+              var probationSalaryGroup = document.getElementById('probation-salary-group');
+              var probationSalaryInput = document.getElementById('Probation_Salary');
+
+              if (probationSelect.value === "false") {
+                  // Set the probation end date to the current date
+                  var currentDate = new Date().toISOString().split('T')[0];
+                  probationEndDateInput.value = currentDate;
+
+                  // Set the probation salary to 0 and hide the field
+                  probationSalaryInput.value = 0;
+                  probationSalaryGroup.style.display = 'none';
+
+                  // Hide the probation end date field
+                  probationEndDateGroup.style.display = 'none';
+              } else {
+                  // Show the probation end date field and probation salary field
+                  probationEndDateGroup.style.display = 'block';
+                  probationSalaryGroup.style.display = 'block';
+
+                  // Clear the probation end date field if previously set to current date
+                  probationEndDateInput.value = '';
+
+                  // Clear the probation salary field
+                  probationSalaryInput.value = '';
+              }
+          }
+
+          // Initialize the state based on the initial value of the Probation field
+          window.onload = function () {
+              handleProbationChange();
+          };
       
-</script>
+      </script>

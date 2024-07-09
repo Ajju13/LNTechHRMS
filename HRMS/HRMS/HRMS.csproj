@@ -121,6 +121,7 @@
     <Compile Include="Controllers\PrintController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RelativeController.cs" />
+    <Compile Include="Controllers\SalaryController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Functions\AttendanceService.cs" />
     <Compile Include="Functions\HashPass.cs" />
@@ -138,6 +139,18 @@
     <Compile Include="Migrations\202407081531534_new.cs" />
     <Compile Include="Migrations\202407081531534_new.Designer.cs">
       <DependentUpon>202407081531534_new.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407090717309_3.cs" />
+    <Compile Include="Migrations\202407090717309_3.Designer.cs">
+      <DependentUpon>202407090717309_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407090838205_4.cs" />
+    <Compile Include="Migrations\202407090838205_4.Designer.cs">
+      <DependentUpon>202407090838205_4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407090840326_9.cs" />
+    <Compile Include="Migrations\202407090840326_9.Designer.cs">
+      <DependentUpon>202407090840326_9.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
@@ -158,6 +171,7 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Relative.cs" />
     <Compile Include="Models\Salary.cs" />
+    <Compile Include="Models\SalaryRevision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AddCNICViewModel.cs" />
     <Compile Include="ViewModels\AddDocumentViewModel.cs" />
@@ -205,6 +219,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\upload\CNIC\" />
     <Folder Include="Views\Check\" />
+    <Folder Include="Views\Salary\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202407081053344_1.resx">
@@ -215,6 +230,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202407081531534_new.resx">
       <DependentUpon>202407081531534_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407090717309_3.resx">
+      <DependentUpon>202407090717309_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407090838205_4.resx">
+      <DependentUpon>202407090838205_4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407090840326_9.resx">
+      <DependentUpon>202407090840326_9.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

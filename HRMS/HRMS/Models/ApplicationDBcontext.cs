@@ -35,6 +35,8 @@ namespace HRMS.Models
 
         public DbSet<Attendances> Attendances { get; set; }
 
+        public DbSet<SalaryRevision> SalaryRevisions { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Check>()

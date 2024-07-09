@@ -76,7 +76,7 @@
                                             </li>
                                             <li>
                                                 <div class="title">Birthday:</div>
-                                                <div class="text">@Model.DOB</div>
+                                                <div class="text">@Model.DOB.ToShortDateString()</div>
                                             </li>
                                             <li>
                                                 <div class="title">Address:</div>
@@ -154,7 +154,7 @@
                                                     <i class="fa fa-pencil"></i> <!-- Icon for editing a record -->
                                                 </a>
                                             }
-                                        </h3>                                        
+                                        </h3>
                                         <h5 class="section-title">Primary</h5>
                                         <ul class="personal-info">
                                             <li>
@@ -218,91 +218,135 @@
                                     </div>
                                 </div>
                             </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="card profile-box flex-fill">
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        Salary
+                                        @if (Model.Sal_id != 0)
+                                        {
+                                            <a href="/Dashboard/EditBank/@Model.Sal_id" target="_blank" class="edit-icon">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Dashboard/ViewBank" target="_blank" class="edit-icon">
+                                                <i class="fa fa-plus"></i> <!-- Icon for creating a record -->
+                                            </a>
+                                        }
+                                    </h3>
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Payment Frequency</div>
+                                            <div class="text">@Model.Frequency</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Payment Method</div>
+                                            <div class="text">@Model.Payment_Method</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">NTN #</div>
+                                            <div class="text">@Model.NTN_Number</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Probation Salary</div>
+                                            <div class="text">@Model.Probation_Salary</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Gross Salary</div>
+                                            <div class="text">@Model.After_Probation_Gross_Salary</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 d-flex">
-                                <div class="card profile-box flex-fill">
-                                    <div class="card-body">
-                                        <h3 class="card-title">
-                                            Education Information
-                                            @if (Model.EducationHistory != null && Model.EducationHistory.Any())
-                                            {
-                                                <a href="@Url.Action("EditEducation", "Education", new { empId = Model.Emp_Id })" target="_blank" class="edit-icon">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a href="/Education/ViewEducation/" target="_blank" class="add-icon">
-                                                    <i class="fa fa-plus"></i>
-                                                </a>
-                                            }
-                                        </h3>
-                                        <div class="experience-box">
-                                            <ul class="experience-list">
-                                                @foreach (var education in Model.EducationHistory)
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 d-flex">
+                                    <div class="card profile-box flex-fill">
+                                        <div class="card-body">
+                                            <h3 class="card-title">
+                                                Education Information
+                                                @if (Model.EducationHistory != null && Model.EducationHistory.Any())
                                                 {
-                                                    <li>
-                                                        <div class="experience-user">
-                                                            <div class="before-circle"></div>
-                                                        </div>
-                                                        <div class="experience-content">
-                                                            <div class="timeline-content">
-                                                                <a href="#/" class="name">@education.InstitutionName</a>
-                                                                <div>@education.Degree</div>
-                                                                <span class="time">@education.FromDate.ToShortDateString() - @education.ToDate.ToShortDateString()</span>
-                                                            </div>
-                                                        </div>
-                                                    </li>
+                                                    <a href="@Url.Action("EditEducation", "Education", new { empId = Model.Emp_Id })" target="_blank" class="edit-icon">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
                                                 }
-                                            </ul>
+                                                else
+                                                {
+                                                    <a href="/Education/ViewEducation/" target="_blank" class="add-icon">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                }
+                                            </h3>
+                                            <div class="experience-box">
+                                                <ul class="experience-list">
+                                                    @foreach (var education in Model.EducationHistory)
+                                                    {
+                                                        <li>
+                                                            <div class="experience-user">
+                                                                <div class="before-circle"></div>
+                                                            </div>
+                                                            <div class="experience-content">
+                                                                <div class="timeline-content">
+                                                                    <a href="#/" class="name">@education.InstitutionName</a>
+                                                                    <div>@education.Degree</div>
+                                                                    <span class="time">@education.FromDate.ToShortDateString() - @education.ToDate.ToShortDateString()</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 d-flex">
-                                <div class="card profile-box flex-fill">
-                                    <div class="card-body">
-                                        <h3 class="card-title">
-                                            Experience
-                                            @if (Model.ExperienceHistory != null && Model.ExperienceHistory.Any())
-                                            {
-                                                <a href="@Url.Action("EditExperience", "Experience", new { empId = Model.Emp_Id })" target="_blank" class="edit-icon">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a href="/Experience/ViewExperience" target="_blank" class="add-icon">
-                                                    <i class="fa fa-plus"></i>
-                                                </a>
-                                            }
-                                        </h3>
-                                        <div class="experience-box">
-                                            <ul class="experience-list">
-                                                @foreach (var experience in Model.ExperienceHistory)
+                                <div class="col-md-6 d-flex">
+                                    <div class="card profile-box flex-fill">
+                                        <div class="card-body">
+                                            <h3 class="card-title">
+                                                Experience
+                                                @if (Model.ExperienceHistory != null && Model.ExperienceHistory.Any())
                                                 {
-                                                    <li>
-                                                        <div class="experience-user">
-                                                            <div class="before-circle"></div>
-                                                        </div>
-                                                        <div class="experience-content">
-                                                            <div class="timeline-content">
-                                                                <a href="#/" class="name">@experience.Company_name</a>
-                                                                <div>@experience.Position</div>
-                                                                <span class="time">@experience.TotalExperience</span>
-                                                            </div>
-                                                        </div>
-                                                    </li>
+                                                    <a href="@Url.Action("EditExperience", "Experience", new { empId = Model.Emp_Id })" target="_blank" class="edit-icon">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
                                                 }
-                                            </ul>
+                                                else
+                                                {
+                                                    <a href="/Experience/ViewExperience" target="_blank" class="add-icon">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                }
+                                            </h3>
+                                            <div class="experience-box">
+                                                <ul class="experience-list">
+                                                    @foreach (var experience in Model.ExperienceHistory)
+                                                    {
+                                                        <li>
+                                                            <div class="experience-user">
+                                                                <div class="before-circle"></div>
+                                                            </div>
+                                                            <div class="experience-content">
+                                                                <div class="timeline-content">
+                                                                    <a href="#/" class="name">@experience.Company_name</a>
+                                                                    <div>@experience.Position</div>
+                                                                    <span class="time">@experience.TotalExperience</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     }

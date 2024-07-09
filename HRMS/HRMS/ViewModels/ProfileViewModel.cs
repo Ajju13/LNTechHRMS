@@ -57,6 +57,18 @@ namespace HRMS.ViewModels
         public List<EducationViewModel> EducationHistory { get; set; }
         public List<ExperienceViewModel> ExperienceHistory { get; set; }
         public Employee Employee { get; set; }
+
+        public string Frequency { get; set; }
+        public string NTN_Number { get; set; }
+        public string Payment_Method { get; set; }
+        public double Probation_Salary { get; set; }
+        public double After_Probation_Gross_Salary { get; set; }
+        public bool Tax_Exempted_ { get; set; }
+        public long Sal_id { get; set; }
+
+        public string DocumentName { get; set; }
+        public string File { get; set; }
+        public string Issue_Date { get; set; }
     }
 
     public class EducationViewModel
