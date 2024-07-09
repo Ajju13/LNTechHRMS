@@ -51,6 +51,9 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
     </Reference>
@@ -132,6 +135,10 @@
     <Compile Include="Migrations\202407081105223_5.Designer.cs">
       <DependentUpon>202407081105223_5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202407081531534_new.cs" />
+    <Compile Include="Migrations\202407081531534_new.Designer.cs">
+      <DependentUpon>202407081531534_new.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Attendances.cs" />
@@ -186,6 +193,7 @@
     <Content Include="Views\Document\ViewDocument.cshtml" />
     <Content Include="Views\Search\EmployeeProfile.cshtml" />
     <Content Include="Views\Attendance\Attendance.cshtml" />
+    <Content Include="Views\Attendance\PersonalAttendence.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -204,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202407081105223_5.resx">
       <DependentUpon>202407081105223_5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407081531534_new.resx">
+      <DependentUpon>202407081531534_new.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

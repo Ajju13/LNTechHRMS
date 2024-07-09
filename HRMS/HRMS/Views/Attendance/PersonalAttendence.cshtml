@@ -1,0 +1,106 @@
+﻿@model HRMS.ViewModels.AdminAttendanceViewModel
+
+@{
+    ViewBag.Title = "Attendance";
+    Layout = "~/Views/Shared/View.cshtml";
+}
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Attendance</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="admin-dashboard.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Attendance</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+    <!-- Display employee attendance records -->
+    @foreach (var attendance in Model.AttendanceRecords)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card punch-status">
+                    <div class="card-body">
+                        <h5 class="card-title">Timesheet <small class="text-muted">@attendance.Date.ToString("dd MMM yyyy")</small></h5>
+                        <div class="punch-det">
+                            <h6>Punch In at</h6>
+                            <p>
+                                @{
+                                    var PunchIn = Model.Checks
+                                        .Where(c => c.Emp_id == attendance.Emp_id && c.CheckType == "CheckIn" && c.CheckTime.Date == attendance.Date.Date)
+                                        .OrderBy(c => c.CheckTime)
+                                        .FirstOrDefault();
+                                    if (PunchIn != null)
+                                    {
+                                        @PunchIn.CheckTime.ToString("ddd, dd MMM yyyy hh:mm tt")
+                                    }
+                                    else
+                                    {
+                                        <span>N/A</span>
+                                    }
+                                }
+                            </p>
+                        </div>
+                        <div class="punch-info">
+                            <div class="punch-hours">
+                                <span>@attendance.Work_Hours.ToString("0.##") hrs</span>
+                            </div>
+                        </div>
+                        <div class="punch-det">
+                            <h6>Punch Out at</h6>
+                            <p>
+                                @{
+                                    var lastPunchOut = Model.Checks
+                                        .Where(c => c.Emp_id == attendance.Emp_id && c.CheckType == "CheckOut" && c.CheckTime.Date == attendance.Date.Date)
+                                        .OrderByDescending(c => c.CheckTime)
+                                        .FirstOrDefault();
+                                    if (lastPunchOut != null)
+                                    {
+                                        @lastPunchOut.CheckTime.ToString("ddd, dd MMM yyyy hh:mm tt")
+                                    }
+                                    else
+                                    {
+                                        <span>N/A</span>
+                                    }
+                                }
+                            </p>
+                        </div>
+
+                        <!-- Punch In/Out button -->
+                        <div class="punch-btn-section">
+                            @using (Html.BeginForm("PersonalAttendence", "Attendance", FormMethod.Post))
+                            {
+                                @Html.Hidden("empId", attendance.Emp_id)
+                                <button type="submit" class="btn btn-primary punch-btn">Punch In/Out</button>
+                            }
+                        </div>
+
+                        <!-- Add more details as needed -->
+                        <div class="statistics">
+                            <div class="row">
+                                <div class="col-md-6 col-6 text-center">
+                                    <div class="stats-box">
+                                        <p>Break</p>
+                                        <h6>@attendance.Break_Hours.ToString("0.##") hrs</h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-6 text-center">
+                                    <div class="stats-box">
+                                        <p>Overtime</p>
+                                        <h6>Calculate overtime if needed</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more columns as needed -->
+        </div>
+    }
+</div>

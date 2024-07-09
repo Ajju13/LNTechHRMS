@@ -15,6 +15,9 @@ namespace HRMS.ViewModels
         public int? SelectedMonth { get; set; }
         public int? SelectedYear { get; set; }
 
-        public DateTime? SelectedDate {  get; set; } 
+        public DateTime? SelectedDate {  get; set; }
+
+        public Check PunchIn { get; set; }
+        public Check PunchOut { get; set; }
     }
 }
